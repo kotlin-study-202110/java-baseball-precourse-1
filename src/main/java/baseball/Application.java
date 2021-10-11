@@ -4,8 +4,6 @@ package baseball;
 import java.util.HashMap;
 
 import java.util.HashSet;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import static nextstep.utils.Console.readLine;
 import static nextstep.utils.Randoms.pickNumberInRange;
@@ -13,58 +11,80 @@ import static nextstep.utils.Randoms.pickNumberInRange;
 public class Application {
     public static void main(String[] args) {
 
-//        HashMap<String,Integer> answer = makeTargetNum();
-        HashSet hashSet = makeTargetNum1();
-//        System.out.println(answer.keySet());
+        boolean hasGameStop = false;
+        boolean gamePlay = true;
 
-//        for (Entry<String,Integer> elem : answer.entrySet()) {
-//            System.out.println("키 : " + elem.getKey() + "값 : " + elem.getValue());
-//        }
-         for (Object elem : hashSet) {
-            System.out.println("키 : " + elem);
+
+
+        while (gamePlay) {
+
+
+
+            if (hasGameStop) {
+                System.out.print("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+                String regame = readLine();
+                //검증
+                // 게임 초기화
+                switch (regame){
+                    case "1":
+                        hasGameStop = false;
+
+                        break;
+                    default:
+                        gamePlay = false;
+                }
+            }
+
+            String[] strings = makeTargetNum1();
+            for (String str : strings) {
+                System.out.println("키 : " + str);
+            }
+
+
+            while (!hasGameStop && gamePlay) {
+                int strike = 0;
+                int boll = 0;
+
+                System.out.print("숫자를 입력해주세요 : ");
+                String s = readLine();
+                // 숫자가 세자리 인지 검증
+
+                String[] inputString = s.split("");
+
+                // gameLogicCheck
+
+                for (int i = 0; i < inputString.length; i++) {
+                    for (int j = 0; j < strings.length; j++) {
+                        if (inputString[i].equals(strings[j])  && i == j) {
+                            strike++;
+                        } else if (inputString[i].equals(strings[j]) && i != j) {
+                            boll++;
+                        } else ;
+
+                    }
+                }
+                System.out.println(strike + " : 스트라이크 " );
+                System.out.println(boll + ": boll " );
+
+                System.out.println(s);
+                if (strike == 3) {
+                    hasGameStop = true;
+                }
+            }
         }
-
-
-        System.out.print("숫자를 입력해주세요 : ");
-        String s = readLine();
-        System.out.println(s);
 
     }
 
-    private static HashMap<String,Integer> makeTargetNum() {
-        HashMap<String, Integer> result;
+
+    private static String[] makeTargetNum1() {
+        String[] ret;
 
         while (true) {
             boolean checkZero = false;
             String randomNum = Integer.toString(pickNumberInRange(111,999));
             System.out.println(randomNum);
-            if(randomNum.contains("0")){
-                checkZero= true;
-            }
-            HashMap<String, Integer> hm = new HashMap<>();
-
-            String[] split = randomNum.split("");
-
-            for (int i = 0; i < split.length; i++) {
-                hm.put(split[i],i + 1);
-            }
-
-            if (hm.size() >= 3 && checkZero == false) {
-                result = hm;
-                break;
-            }
-        }
-        return result;
-    }
-    private static HashSet<String> makeTargetNum1() {
-        HashSet<String> ret = new HashSet<>();
-
-        while (true) {
-            boolean checkZero = false;
-            String randomNum = Integer.toString(pickNumberInRange(111,999));
-            System.out.println(randomNum);
-            if(randomNum.contains("0")){
-                checkZero= true;
+            if (randomNum.contains("0")) {
+                checkZero = true;
             }
             HashSet<String> hs = new HashSet<>();
 
@@ -75,7 +95,7 @@ public class Application {
             }
 
             if (hs.size() >= 3 && checkZero == false) {
-                ret= hs;
+                ret = split;
                 break;
             }
         }
