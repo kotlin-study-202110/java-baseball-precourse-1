@@ -15,17 +15,13 @@ public class Application {
         boolean gamePlay = true;
 
 
-
         while (gamePlay) {
 
-
-
             if (hasGameStop) {
-                System.out.print("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+                System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
                 String regame = readLine();
-                //검증
-                // 게임 초기화
-                switch (regame){
+                // TODO: 2021/10/1 regame verify
+                switch (regame) {
                     case "1":
                         hasGameStop = false;
 
@@ -36,9 +32,6 @@ public class Application {
             }
 
             String[] strings = makeTargetNum1();
-            for (String str : strings) {
-                System.out.println("키 : " + str);
-            }
 
 
             while (!hasGameStop && gamePlay) {
@@ -47,15 +40,15 @@ public class Application {
 
                 System.out.print("숫자를 입력해주세요 : ");
                 String s = readLine();
-                // 숫자가 세자리 인지 검증
+                // TODO: 2021/10/12 3 number verify
 
                 String[] inputString = s.split("");
 
-                // gameLogicCheck
+                // TODO: 2021/10/12 gameLogic refactoring
 
                 for (int i = 0; i < inputString.length; i++) {
                     for (int j = 0; j < strings.length; j++) {
-                        if (inputString[i].equals(strings[j])  && i == j) {
+                        if (inputString[i].equals(strings[j]) && i == j) {
                             strike++;
                         } else if (inputString[i].equals(strings[j]) && i != j) {
                             boll++;
@@ -63,10 +56,20 @@ public class Application {
 
                     }
                 }
-                System.out.println(strike + " : 스트라이크 " );
-                System.out.println(boll + ": boll " );
 
-                System.out.println(s);
+
+                // TODO: 2021/10/12 Error check (output)
+                if (strike != 0 && boll == 0) {
+                    System.out.println(strike + " : 스트라이크");
+                } else if (strike != 0 && boll != 0) {
+                    System.out.println(strike + ": 스트라이크 , " + boll + ": 볼");
+                } else if (boll != 0 && strike == 0) {
+                    System.out.println(boll + ": 볼");
+                } else {
+                    System.out.println("낫싱");
+
+                }
+
                 if (strike == 3) {
                     hasGameStop = true;
                 }
