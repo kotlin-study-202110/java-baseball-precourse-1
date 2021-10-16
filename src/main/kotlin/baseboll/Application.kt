@@ -30,25 +30,25 @@ private fun basebollGameLogic() {
         print("숫자를 입력해주세요 : ")
         val s = Console.readLine()
         // 숫자가 세자리 인지 검증
-        val inputString = s.split("").filter { it!=null&&it!="" }.toMutableList()
+        val inputString = s.split("").filter { it != null && it != "" }.toMutableSet()
 
 
 
         if (verifiedRandomNum(inputString)) continue
 
 
-        // gameLogicCheck
-        for (i in inputString.indices) {
-            for (j in strings.indices) {
-                if (inputString[i] == strings[j] && i == j) {
-                    strike++
-                } else if (inputString[i] == strings[j] && i != j) {
-                    boll++
-                }
+        inputString.forEachIndexed { index: Int, number: String ->
+            if (strings.containsKey(number)) {
+                if (strings.get(number) == index) strike++
+                else boll++
             }
         }
-        println("$strike : 스트라이크 ")
-        println("$boll: boll ")
+
+
+        if (strike == 0 && boll == 0) println("낫싱")
+        if (strike > 0 && boll == 0) println("$strike : 스트라이크 ")
+        if (strike == 0 && boll > 0) println("$boll: boll ")
+        if (strike > 0 && boll > 0) println("$strike : 스트라이크 $boll: boll ")
         println(s)
         if (strike == 3) {
             hasGameStop = true
@@ -56,7 +56,7 @@ private fun basebollGameLogic() {
     }
 }
 
-private fun verifiedRandomNum(subList: MutableList<String>): Boolean {
+private fun verifiedRandomNum(subList: MutableSet<String>): Boolean {
     var inputNumCheck = false;
 
     try {
@@ -82,8 +82,8 @@ private fun isRegame() {
     }
 }
 
-private fun makeTargetNum1(): MutableList<String> {
-    var ret: MutableList<String>
+private fun makeTargetNum1(): MutableMap<String, Int> {
+    var ret = mutableMapOf<String, Int>()
     while (true) {
         var checkZero = false
         val randomNum = Integer.toString(Randoms.pickNumberInRange(111, 999))
@@ -91,18 +91,16 @@ private fun makeTargetNum1(): MutableList<String> {
         if (randomNum.contains("0")) {
             checkZero = true
         }
-        val hs = HashSet<String>()
-        val split = randomNum.split("").filter { it!=null&&it!="" }.toMutableList()
+        val test: MutableSet<String> = randomNum.split("").filter { it != null && it != "" }.toMutableSet()
+        val hs = mutableMapOf<String, Int>()
+        test.forEachIndexed { index: Int, s: String -> hs.put(s, index) }
 
-
-        for (i in split.indices) {
-            hs.add(split[i])
-        }
         if (hs.size >= 3 && checkZero == false) {
-            ret = split
+            ret = hs
             break
         }
     }
+
     return ret
 }
 
