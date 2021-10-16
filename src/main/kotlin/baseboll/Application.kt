@@ -5,6 +5,11 @@ import nextstep.utils.Randoms
 
 class Application
 
+
+// hashMapOf() 해쉬맵에 저장후 정렬된 키값으로
+// mutableMapOf() 맵에 저장후 순서 보장
+//
+
 var hasGameStop = false
 var gamePlay = true
 fun main(args: Array<String>) {
@@ -32,8 +37,6 @@ private fun basebollGameLogic() {
         // 숫자가 세자리 인지 검증
         val inputString = s.split("").filter { it != null && it != "" }.toMutableSet()
 
-
-
         if (verifiedRandomNum(inputString)) continue
 
 
@@ -60,8 +63,10 @@ private fun verifiedRandomNum(subList: MutableSet<String>): Boolean {
     var inputNumCheck = false;
 
     try {
-        if (subList.size == 3) inputNumCheck = true else {
-            inputNumCheck = false; fail("에러발생")
+        if (subList.size == 3) inputNumCheck = true
+        else {
+            inputNumCheck = false
+            fail("에러발생")
         }
     } catch (e: Exception) {
         println(e.message)

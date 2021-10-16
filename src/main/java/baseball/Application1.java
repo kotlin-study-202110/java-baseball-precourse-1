@@ -8,7 +8,7 @@ import java.util.HashSet;
 import static nextstep.utils.Console.readLine;
 import static nextstep.utils.Randoms.pickNumberInRange;
 
-public class Application {
+public class Application1 {
     public static void main(String[] args) {
 
         boolean hasGameStop = false;
