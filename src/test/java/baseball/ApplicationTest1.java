@@ -10,7 +10,7 @@ import org.mockito.MockedStatic;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mockStatic;
 
-public class ApplicationTest extends NSTest {
+public class ApplicationTest1 extends NSTest {
     @BeforeEach
     void beforeEach() {
         super.setUp();
@@ -45,6 +45,6 @@ public class ApplicationTest extends NSTest {
 
     @Override
     public void runMain() {
-        Application.main(new String[]{});
+        Application1.main(new String[]{});
     }
 }
