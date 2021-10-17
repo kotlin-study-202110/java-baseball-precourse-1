@@ -19,6 +19,7 @@ public class ApplicationTest extends NSTest {
     @Test
     void 낫싱() {
         try (final MockedStatic<Randoms> mockRandoms = mockStatic(Randoms.class)) {
+
             mockRandoms
                     .when(() -> Randoms.pickNumberInRange(anyInt(), anyInt()))
                     .thenReturn(1, 3, 5);
@@ -45,6 +46,6 @@ public class ApplicationTest extends NSTest {
 
     @Override
     public void runMain() {
-        Application.main(new String[]{});
+        KotlinApplicationKt.main();
     }
 }
